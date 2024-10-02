@@ -19,3 +19,5 @@ if x < mid then {
 else {
     ricerca_binaria_ricorsivo(A, x, k + 1, j)
 }
+
+return -1
