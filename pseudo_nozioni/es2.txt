@@ -1,0 +1,21 @@
+Algoritmo ricerca_binaria_ricorsivo
+Input: A array di lunghezza n, x valore intero, i indice da dove partire con la ricerca, j indice di dove fermare la ricerca
+Output: indice i se x appare in A, -1 se x non appare
+
+if i > j then {
+    return -1
+}
+
+k <- indice a metà di A 
+mid <- elemento a metà di A
+
+if x == mid then{
+    return mid
+}
+
+if x < mid then {
+    ricerca_binaria_ricorsivo(A, x, i, k - 1)
+}
+else {
+    ricerca_binaria_ricorsivo(A, x, k + 1, j)
+}

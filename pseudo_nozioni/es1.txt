@@ -1,0 +1,12 @@
+Algoritmo moltiplicazione (A, B)
+Input: A array di lunghezza n, B array di lunghezza m
+Output: valore (sum(i = 0 -> i = n-1) sum(j = 0 -> j = m - 1)a[i]*a[j])
+
+v <- 0
+for i <- 0 to n-1 do {
+    for j <- 0 to m-1 do {
+        v <- v + (A[i] * B[j])
+    }
+}
+
+return v
