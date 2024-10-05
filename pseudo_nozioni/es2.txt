@@ -21,3 +21,32 @@ else {
 }
 
 return -1
+
+----------------------------------------------------------------------------
+
+Algoritmo ricerca_binaria_ricorsivo
+Input: A array di lunghezza n, x valore intero
+Output: indice i se x appare in A, -1 se x non appare
+
+i <- 0
+j <- A.length - 1
+
+k <- indice a metà di A 
+value <- elemento a metà di A
+
+while True do {
+    if k == A.length - 1 then {
+        return -1
+    }
+
+    if value == x then {
+        return k
+    }
+    else if value < x then {
+        k = k / 2
+    }
+    else {
+        k = k + (A.length - k ) / 2
+    }
+    value = A[k]
+}
