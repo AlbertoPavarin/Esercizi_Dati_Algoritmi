@@ -6,14 +6,14 @@ if i > j then {
     return -1
 }
 
-k <- indice a metà di A 
-mid <- elemento a metà di A
+k <- (i + j) / 2
+value <- a[k]
 
-if x == mid then{
-    return mid
+if x == value then{
+    return value
 }
 
-if x < mid then {
+if x < value then {
     ricerca_binaria_ricorsivo(A, x, i, k - 1)
 }
 else {
@@ -30,23 +30,21 @@ Output: indice i se x appare in A, -1 se x non appare
 
 i <- 0
 j <- A.length - 1
+k <- 0
+value <- 0
 
-k <- indice a metà di A 
-value <- elemento a metà di A
-
-while True do {
-    if k == A.length - 1 then {
-        return -1
-    }
-
+while i <= j do {
+    k <- (i+j)/2
+    value <- A[k]
     if value == x then {
-        return k
+        return k;
     }
-    else if value < x then {
-        k = k / 2
+    else if x < value then {
+        j = k - 1;
     }
     else {
-        k = k + (A.length - k ) / 2
+        i = k + 1;
     }
-    value = A[k]
 }
+
+return -1
