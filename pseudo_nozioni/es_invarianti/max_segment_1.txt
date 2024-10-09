@@ -1,0 +1,9 @@
+Esercizio MaxSegment pg 72 lucidi: Nozioni Di Base
+
+Invariante: A ogni fine iterazione currMax contiene il massimo numero di 1 consecutivi
+1) all'inizio l'Invariante vale perchè l'insieme [0, i) è vuoto
+2) per i successivi cicli:
+    alla fine dell'iterazione i max conterrà la lunghezza del più lungo segmento continuo di 1.
+    all'iterzione i + 1: 
+        - se S[i] = 1: curr viene incrementato di 1 e poi max = max{max, curr}
+3) alla fine del ciclo se l'Invariante vale L, proprietà, sara uguale a max
