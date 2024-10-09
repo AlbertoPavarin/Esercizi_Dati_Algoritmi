@@ -14,10 +14,10 @@ if x == value then{
 }
 
 if x < value then {
-    ricerca_binaria_ricorsivo(A, x, i, k - 1)
+    return ricerca_binaria_ricorsivo(A, x, i, k - 1)
 }
 else {
-    ricerca_binaria_ricorsivo(A, x, k + 1, j)
+    return ricerca_binaria_ricorsivo(A, x, k + 1, j)
 }
 
 return -1
