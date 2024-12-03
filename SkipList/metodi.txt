@@ -1,0 +1,5 @@
+next, NO
+prev, NO
+above, NO
+below, NO
+skipSearch, NO

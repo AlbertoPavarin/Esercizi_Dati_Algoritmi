@@ -24,7 +24,7 @@ return -1
 
 ----------------------------------------------------------------------------
 
-Algoritmo ricerca_binaria_ricorsivo
+Algoritmo ricerca_binaria_iterativo
 Input: A array di lunghezza n, x valore intero
 Output: indice i se x appare in A, -1 se x non appare
 
