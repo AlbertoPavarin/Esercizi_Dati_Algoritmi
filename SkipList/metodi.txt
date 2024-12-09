@@ -1,5 +1,6 @@
-next, NO
-prev, NO
-above, NO
-below, NO
-skipSearch, NO
+next, SI
+prev, SI
+above, SI
+below, SI
+skipSearch, SI
+insert NO
