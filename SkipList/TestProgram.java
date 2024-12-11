@@ -30,7 +30,7 @@ class SkipListPQ {
 
     public SkipListPQ(double alpha) {
         this.size = 0;
-        this.levels = 6;
+        this.levels = 1;
         this.alpha = alpha;
         this.rand = new Random();
         this.head = new Node(new MyEntry(Integer.MIN_VALUE, ""));
@@ -75,7 +75,6 @@ class SkipListPQ {
 
     public Node skipSearch(int k){
         int level = 0;
-        System.out.println("Search: ");
         Node currentNode = this.head;
         while (currentNode.getBelow() != null) {
             currentNode = currentNode.getBelow();
@@ -98,7 +97,27 @@ class SkipListPQ {
     }
 
     public int insert(int key, String value) {
-        // TO BE COMPLETED
+        int genNmb = this.generateEll(this.alpha, key);
+        if ((genNmb == 0 && this.levels == 1)) {
+            genNmb = 1;
+        }
+        if (genNmb >= this.levels) {
+            int olderLevels = this.levels;
+            this.levels = genNmb + 1;
+            Node newHeadNode;
+            for (int i = olderLevels; i < this.levels; i++) {
+                newHeadNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+                newHeadNode.setBelow(this.head);
+                this.head.setAbove(newHeadNode);
+                this.head = newHeadNode;
+            }
+            newHeadNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+            newHeadNode.setBelow(this.head);
+            this.head.setAbove(newHeadNode);
+            this.head = newHeadNode;
+        }
+
+        System.out.println("generated levels: " + genNmb);
         Node[] nodes = new Node[this.levels];
         nodes[0] = this.head;
         int level = 0;
@@ -107,22 +126,33 @@ class SkipListPQ {
         Node lastVisited = this.head;
         while (currentNode.getBelow() != null) {
             currentNode = currentNode.getBelow();
-            level++;
             lastVisited = currentNode;
             while ((currentNode.getNext()) != null) {
-                if ( key >= currentNode.getNext().getKey())
-                {
+                if ( key >= currentNode.getNext().getKey()) {
                     lastVisited = currentNode;
                     currentNode = currentNode.getNext();
                 }
                 else
                     break;
             }
-            System.out.println("Last visited of lvl "+ level + " : " + lastVisited);
-            nodes[level] = lastVisited;
+            nodes[level++] = lastVisited;
+        } // search
+        
+
+        // insertion
+        Node[] newNodes = new Node[genNmb + 1];
+        for (int i = 0; i < genNmb + 1; i++) {
+            Node newNode = new Node(new MyEntry(key, value));
+            newNode.setPrev(nodes[levels - i - 1]);
+            nodes[levels - i - 1].setNext(newNode);
+            newNodes[i] = newNode;
+            if (i > 0) {
+                newNodes[i].setBelow(newNodes[i - 1]);
+                newNodes[i - 1].setAbove(newNodes[i]);
+            }
         }
-        System.out.println("sdrogo: " + currentNode);
-        return 0;
+
+        return key;
     }
 
     private int generateEll(double alpha_ , int key) {
@@ -266,7 +296,9 @@ public class TestProgram {
         sl.print();
 
         sl.insert(1, "asd");
-        // Node n = sl.skipSearch(30);
-        // System.out.println(n);
+        Node n = sl.skipSearch(30);
+        sl.print();
+
+        System.out.println("Search:" + n + ", Above: " + n.getAbove());
     }
 }

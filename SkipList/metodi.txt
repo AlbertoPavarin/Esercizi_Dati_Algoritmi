@@ -3,4 +3,4 @@ prev, SI
 above, SI
 below, SI
 skipSearch, SI
-insert NO
+insert, SI
