@@ -99,13 +99,14 @@ class SkipListPQ {
     public int insert(int key, String value) {
         int genNmb = this.generateEll(this.alpha, key);
         int olderLevels = this.levels;
+        System.out.println("Gen Numbers: " + genNmb);
         if (genNmb == 0 && this.levels == 1) {
             this.levels += genNmb + 1;
             generateNewHeads(olderLevels);
         }
         
-        if (genNmb >= this.levels) {
-            this.levels += genNmb + 1;
+        if (genNmb + 1 >= this.levels) {
+            this.levels = genNmb + 2;
             generateNewHeads(olderLevels);
         }
 
@@ -312,6 +313,6 @@ public class TestProgram {
         // Node n = sl.skipSearch(30);
         // sl.print();
 
-        System.out.println("Search:" + n + ", below: " + n.getBelow());
+        // System.out.println("Search:" + n + ", below: " + n.getBelow());
     }
 }
