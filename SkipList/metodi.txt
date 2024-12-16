@@ -5,5 +5,5 @@ below, SI
 skipSearch, SI
 insert, SI fino a punto 2
 min, SI
-removeMin, implentando
+removeMin, SI
 print, da ridefinire

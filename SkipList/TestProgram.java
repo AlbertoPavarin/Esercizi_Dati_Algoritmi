@@ -33,7 +33,7 @@ class SkipListPQ {
         this.levels = 1;
         this.alpha = alpha;
         this.rand = new Random();
-        this.head = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+        this.head = new Node(new MyEntry(1, ""));
         // Node currNode = this.head;
         // for (int i = 0; i < levels - 1; i++) {
         //     Node newNode = new Node(new MyEntry(Integer.MIN_VALUE + i + 1, ""));
@@ -199,8 +199,10 @@ class SkipListPQ {
             }
             else {
                 prevNode.setNext(null);
+                this.levels--;
+                this.head = this.head.getBelow();
             }
-            
+
             if (currNode.getAbove() == null)
                 break;
 
