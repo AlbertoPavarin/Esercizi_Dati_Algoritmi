@@ -181,15 +181,6 @@ class SkipListPQ {
 
         Node prevNode;
         currNode = currNode.getNext();
-        // while (currNode.getAbove() != null) {
-        //     currNode = currNode.getAbove();
-        //     prevNode = currNode.getPrev();
-        //     if (currNode.getNext() != null) {
-        //         prevNode.setNext(currNode.getNext());
-        //         currNode.getNext().setPrev(prevNode);
-        //     }
-        // }
-
         while (true) {
             
             prevNode = currNode.getPrev();
@@ -212,7 +203,7 @@ class SkipListPQ {
         return currNode.getEntry();
     }
 
-    public void print() {
+    public void printBello() {
         Node currentNode = this.head;
         Node currentHead = this.head;
         currentNode.getNext();
@@ -227,6 +218,29 @@ class SkipListPQ {
             System.out.println(" ]");
         }
         System.out.println("]");
+    }
+
+    public void print() {
+        Node currentFirstNode = this.head;
+        while (currentFirstNode.getBelow() != null)
+        currentFirstNode = currentFirstNode.getBelow();
+
+        while (true) { 
+            if (currentFirstNode.getNext() == null)
+                break;
+
+            currentFirstNode = currentFirstNode.getNext();
+            Node currNode = currentFirstNode;
+            int cnt = 1;
+            while (currNode.getAbove() != null) {
+                cnt++;
+                currNode = currNode.getAbove();
+            }
+
+            System.out.print(currNode.getEntry() + " " + cnt + ", ");
+        }
+
+        System.out.println("");
     }
 
 
@@ -344,25 +358,26 @@ public class TestProgram {
         //     System.out.println("Error reading file: " + e.getMessage());
         // }
         SkipListPQ sl = new SkipListPQ(0.5);
-        sl.print();
+        sl.printBello();
 
         sl.insert(1, "asd");
         System.out.println("");
-        sl.print();
+        sl.printBello();
         System.out.println("");
 
         sl.insert(12, "babbo");
         Node n = sl.skipSearch(30);
-        sl.print();
+        sl.printBello();
         System.out.println("");
 
         sl.insert(12, "babbo2");
         // Node n = sl.skipSearch(30);
+        sl.printBello();
         sl.print();
-        System.out.println("Entry con chiave minima: " + sl.min());
+        // System.out.println("Entry con chiave minima: " + sl.min());
 
-        System.out.println("Chiave rimossa: " + sl.removeMin());
-        sl.print();
+        // System.out.println("Chiave rimossa: " + sl.removeMin());
+        // sl.printBello();
         // System.out.println("Search:" + n + ", below: " + n.getBelow());
     }
 }
