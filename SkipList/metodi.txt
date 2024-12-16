@@ -3,4 +3,7 @@ prev, SI
 above, SI
 below, SI
 skipSearch, SI
-insert, SI
+insert, SI fino a punto 2
+min, SI
+removeMin, implentando
+print, da ridefinire

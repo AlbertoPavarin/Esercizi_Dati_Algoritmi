@@ -92,8 +92,14 @@ class SkipListPQ {
     }
 
     public MyEntry min() {
-	// TO BE COMPLETED 
-        return new MyEntry(0, "0");
+        Node currNode = this.head;
+        while (currNode.getBelow() != null) {
+            currNode = currNode.getBelow();          
+        }
+
+        if (currNode.getNext() == null)
+            return currNode.getEntry();
+        return currNode.getNext().getEntry();
     }
 
     public int insert(int key, String value) {
@@ -165,8 +171,43 @@ class SkipListPQ {
     }
 
     public MyEntry removeMin() {
-	// TO BE COMPLETED 
-        return new MyEntry(0, "0");
+        Node currNode = this.head;
+        while (currNode.getBelow() != null) {
+            currNode = currNode.getBelow();          
+        }
+
+        if (currNode.getNext() == null)
+            return currNode.getEntry();
+
+        Node prevNode;
+        currNode = currNode.getNext();
+        // while (currNode.getAbove() != null) {
+        //     currNode = currNode.getAbove();
+        //     prevNode = currNode.getPrev();
+        //     if (currNode.getNext() != null) {
+        //         prevNode.setNext(currNode.getNext());
+        //         currNode.getNext().setPrev(prevNode);
+        //     }
+        // }
+
+        while (true) {
+            
+            prevNode = currNode.getPrev();
+            if (currNode.getNext() != null) {
+                prevNode.setNext(currNode.getNext());
+                currNode.getNext().setPrev(prevNode);
+            }
+            else {
+                prevNode.setNext(null);
+            }
+            
+            if (currNode.getAbove() == null)
+                break;
+
+            currNode = currNode.getAbove();
+        }   
+
+        return currNode.getEntry();
     }
 
     public void print() {
@@ -211,6 +252,10 @@ class Node{
     public Node(MyEntry en) {
         this.next = new Node[4];
         this.e = en;
+    }
+
+    public MyEntry getEntry() {
+        return this.e;
     }
 
     public int getKey() {
@@ -309,10 +354,13 @@ public class TestProgram {
         sl.print();
         System.out.println("");
 
-        // sl.insert(12, "babbo2");
+        sl.insert(12, "babbo2");
         // Node n = sl.skipSearch(30);
-        // sl.print();
+        sl.print();
+        System.out.println("Entry con chiave minima: " + sl.min());
 
+        System.out.println("Chiave rimossa: " + sl.removeMin());
+        sl.print();
         // System.out.println("Search:" + n + ", below: " + n.getBelow());
     }
 }
