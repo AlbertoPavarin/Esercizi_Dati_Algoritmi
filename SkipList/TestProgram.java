@@ -30,17 +30,17 @@ class SkipListPQ {
 
     public SkipListPQ(double alpha) {
         this.size = 0;
-        this.levels = 1;
+        this.levels = 2;
         this.alpha = alpha;
         this.rand = new Random();
-        this.head = new Node(new MyEntry(1, ""));
-        // Node currNode = this.head;
-        // for (int i = 0; i < levels - 1; i++) {
-        //     Node newNode = new Node(new MyEntry(Integer.MIN_VALUE + i + 1, ""));
-        //     currNode.setBelow(newNode);
-        //     newNode.setAbove(currNode);
-        //     currNode = newNode;
-        // }
+        this.head = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+        Node currNode = this.head;
+        for (int i = 0; i < levels - 1; i++) {
+            Node newNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+            currNode.setBelow(newNode);
+            newNode.setAbove(currNode);
+            currNode = newNode;
+        }
         // this.head.setBelow(new Node(new MyEntry(Integer.MIN_VALUE, "")));
         // Node n1_min = this.head.getBelow();
         // n1_min.setAbove(this.head);
@@ -190,8 +190,10 @@ class SkipListPQ {
             }
             else {
                 prevNode.setNext(null);
-                this.levels--;
-                this.head = this.head.getBelow();
+                if (this.levels != 2) {
+                    this.levels--;
+                    this.head = this.head.getBelow();
+                }
             }
 
             if (currNode.getAbove() == null)
@@ -374,10 +376,13 @@ public class TestProgram {
         // Node n = sl.skipSearch(30);
         sl.printBello();
         sl.print();
-        // System.out.println("Entry con chiave minima: " + sl.min());
+        System.out.println("Entry con chiave minima: " + sl.min());
 
-        // System.out.println("Chiave rimossa: " + sl.removeMin());
-        // sl.printBello();
-        // System.out.println("Search:" + n + ", below: " + n.getBelow());
+        System.out.println("Chiave rimossa: " + sl.removeMin());
+        System.out.println("Chiave rimossa: " + sl.removeMin());
+        System.out.println("Chiave rimossa: " + sl.removeMin());
+
+        sl.printBello();
+        sl.print();
     }
 }
