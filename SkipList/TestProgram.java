@@ -164,7 +164,7 @@ class SkipListPQ {
         Node prevNode;
         currNode = currNode.getNext();
         while (true) {
-            
+            this.size--;
             prevNode = currNode.getPrev();
             if (currNode.getNext() != null) {
                 prevNode.setNext(currNode.getNext());
@@ -324,22 +324,31 @@ public class TestProgram {
 
         //         switch (operation) {
         //             case 0:
-		// 	// TO BE COMPLETED 
+        //                 System.out.println("Min: " + skipList.min());
         //                 break;
         //             case 1:
-		// 	// TO BE COMPLETED 
+        //                 System.out.println("RemoveMin: " + skipList.removeMin());
         //                 break;
         //             case 2:
-		// 	// TO BE COMPLETED 
+        //                 int nodeCnt = skipList.insert(Integer.parseInt(line[1]), line[2]);
+        //                 tot += nodeCnt;
+        //                 insertDone++;
+        //                 System.out.println("Insert: " + nodeCnt);
         //                 break;
         //             case 3:
-		// 	// TO BE COMPLETED 
-        //                 break;
+        //                 skipList.print();
+        //                 skipList.printBello();
+        //                 return;
+
+        //                 // break;
         //             default:
         //                 System.out.println("Invalid operation code");
         //                 return;
         //         }
         //     }
+
+        //     System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
+
         // } catch (IOException e) {
         //     System.out.println("Error reading file: " + e.getMessage());
         // }
@@ -351,8 +360,10 @@ public class TestProgram {
         tot += sl.insert(12, "babbo");
         insertDone++;
         tot += sl.insert(12, "babbo2");
+        sl.printBello();
         insertDone++;
-        tot += sl.insert(100, "a");
+        tot += sl.insert(10, "a");
+        sl.printBello();
         insertDone++;
         tot += sl.insert(200, "v");
         insertDone++;
@@ -361,7 +372,12 @@ public class TestProgram {
         tot += sl.insert(400, "c");
         insertDone++;
         sl.printBello();
+        sl.removeMin();
+        sl.removeMin();
+        sl.removeMin();
+        sl.printBello();
         sl.print();
+
         System.out.println(sl.getAlpha() + ", " + sl.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
     }
 }
