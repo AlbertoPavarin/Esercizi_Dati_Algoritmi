@@ -82,7 +82,6 @@ class SkipListPQ {
     public int insert(int key, String value) {
         int genNmb = this.generateEll(this.alpha, key);
         int olderLevels = this.levels;
-        System.out.println("Gen Numbers: " + genNmb);
         if (genNmb == 0 && this.levels == 1) {
             this.levels += genNmb + 1;
         }
@@ -185,23 +184,6 @@ class SkipListPQ {
         return currNode.getEntry();
     }
 
-    public void printBello() {
-        Node currentNode = this.head;
-        Node currentHead = this.head;
-        currentNode.getNext();
-        System.out.println("[ ");
-        for (int i = 0; i < levels; i++) {
-            System.out.print(" S" + (levels - 1 - i) + " [ ");
-            System.out.print(currentNode.toString());
-            while ((currentNode = currentNode.getNext()) != null)
-                System.out.print(currentNode.toString());
-            currentNode = currentHead.getBelow();
-            currentHead = currentHead.getBelow();
-            System.out.println(" ]");
-        }
-        System.out.println("]");
-    }
-
     public void print() {
         Node currentFirstNode = this.head;
         while (currentFirstNode.getBelow() != null)
@@ -301,8 +283,8 @@ class Node{
 
 public class TestProgram {
     public static void main(String[] args) {
-        int tot = 0;
-        int insertDone = 0;
+        double tot = 0;
+        double insertDone = 0;
         if (args.length != 1) {
             System.out.println("Usage: java TestProgram <file_path>");
             return;
@@ -322,16 +304,15 @@ public class TestProgram {
 
                 switch (operation) {
                     case 0:
-                        System.out.println("Min: " + skipList.min());
+                        System.out.println(skipList.min());
                         break;
                     case 1:
-                        System.out.println("RemoveMin: " + skipList.removeMin());
+                        skipList.removeMin();
                         break;
                     case 2:
                         int nodeCnt = skipList.insert(Integer.parseInt(line[1]), line[2]);
                         tot += nodeCnt;
                         insertDone++;
-                        System.out.println("Insert: " + nodeCnt);
                         break;
                     case 3:
                         skipList.print();
@@ -342,7 +323,7 @@ public class TestProgram {
                 }
             }
 
-            System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
+            System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + (tot/insertDone) + "");
 
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
