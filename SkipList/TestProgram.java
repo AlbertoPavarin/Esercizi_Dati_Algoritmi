@@ -81,7 +81,6 @@ class SkipListPQ {
     public int insert(int key, String value) {
         int genNmb = this.generateEll(this.alpha, key);
         int olderLevels = this.levels;
-        boolean override = false;
         System.out.println("Gen Numbers: " + genNmb);
         if (genNmb == 0 && this.levels == 1) {
             this.levels += genNmb + 1;
@@ -92,7 +91,6 @@ class SkipListPQ {
         if (genNmb + 1 >= this.levels) {
             this.levels = genNmb + 2;
             generateNewHeads(olderLevels);
-            override = true;
         }
 
         Node[] nodes = new Node[this.levels];
@@ -119,12 +117,17 @@ class SkipListPQ {
             nodes[level] = lastVisited;
         }
 
+        for (int i = 0; i < nodes.length; i++) {
+            System.out.println(nodes[i]);
+        }
+
         // insertion
         Node[] newNodes = new Node[genNmb + 1];
         for (int i = 0; i < genNmb + 1; i++) {
             this.size++;
             Node newNode = new Node(new MyEntry(key, value));
             newNode.setPrev(nodes[levels - i - 1]);
+            newNode.setNext(nodes[levels - i - 1].getNext());
             nodes[levels - i - 1].setNext(newNode);
             newNodes[i] = newNode;
             if (i > 0) {
