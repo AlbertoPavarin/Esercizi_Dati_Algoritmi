@@ -219,7 +219,7 @@ class SkipListPQ {
     }
 }
 
-class Node{
+    class Node{
     private static final int NEXT = 0;
     private static final int PREV = 1;
     private static final int ABOVE = 2;
