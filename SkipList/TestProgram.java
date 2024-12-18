@@ -38,31 +38,10 @@ class SkipListPQ {
         Node newNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
         currNode.setBelow(newNode);
         newNode.setAbove(currNode);
-        // this.head.setBelow(new Node(new MyEntry(Integer.MIN_VALUE, "")));
-        // Node n1_min = this.head.getBelow();
-        // n1_min.setAbove(this.head);
-        // n1_min.setNext(new Node(new MyEntry(10, "sdrogo")));
-        // n1_min.setBelow(new Node(new MyEntry(Integer.MIN_VALUE, "")));
-        // Node n1_10 = n1_min.getNext();
-        // n1_10.setPrev(n1_min);
-        // n1_10.setNext(new Node(new MyEntry(30, "sdrogo"))); 
-        // Node n1_30 = n1_10.getNext();
-        // n1_30.setPrev(n1_10);
-        // Node n2_min = this.head.getBelow().getBelow();
-        // n2_min.setAbove(this.head.getBelow().getBelow());
-        // n2_min.setNext(new Node(new MyEntry(10, "sdrogo")));
-        // Node n2_10 = n2_min.getNext();
-        // n2_10.setPrev(n2_min);
-        // n2_10.setAbove(n1_10);
-        // n2_10.setNext(new Node(new MyEntry(20, "sdrogo")));
-        // Node n2_20 = n2_10.getNext();
-        // n2_20.setPrev(n2_10);
-        // n2_20.setNext(new Node(new MyEntry(30, "sdrogo")));
-        // Node n2_30 = n2_20.getNext();
-        // n2_30.setAbove(n1_30);
-        // n2_30.setPrev(n2_20);
-        // n1_10.setBelow(n2_10);
-        // levels = 3;
+    }
+
+    public double getAlpha() { 
+        return this.alpha;
     }
 
     public int size() {
@@ -143,7 +122,7 @@ class SkipListPQ {
         // insertion
         Node[] newNodes = new Node[genNmb + 1];
         for (int i = 0; i < genNmb + 1; i++) {
-            
+            this.size++;
             Node newNode = new Node(new MyEntry(key, value));
             newNode.setPrev(nodes[levels - i - 1]);
             nodes[levels - i - 1].setNext(newNode);
@@ -154,9 +133,6 @@ class SkipListPQ {
             }
         }
 
-        // if (!override)
-        //     return nodeCnt;
-        // else
         return nodeCnt - (this.levels - olderLevels);
     }
 
@@ -327,6 +303,8 @@ class Node{
 
 public class TestProgram {
     public static void main(String[] args) {
+        int tot = 0;
+        int insertDone = 0;
         // if (args.length != 1) {
         //     System.out.println("Usage: java TestProgram <file_path>");
         //     return;
@@ -368,35 +346,22 @@ public class TestProgram {
         SkipListPQ sl = new SkipListPQ(0.5);
         sl.printBello();
 
-        System.out.println("nodi contati 1: " + sl.insert(1, "asd"));
-        System.out.println("");
+        tot += sl.insert(1, "asd");
+        insertDone++;
+        tot += sl.insert(12, "babbo");
+        insertDone++;
+        tot += sl.insert(12, "babbo2");
+        insertDone++;
+        tot += sl.insert(100, "a");
+        insertDone++;
+        tot += sl.insert(200, "v");
+        insertDone++;
+        tot += sl.insert(300, "b");
+        insertDone++;
+        tot += sl.insert(400, "c");
+        insertDone++;
         sl.printBello();
-        System.out.println("");
-
-        System.out.println("nodi contati 12: " + sl.insert(12, "babbo"));
-        Node n = sl.skipSearch(30);
-        sl.printBello();
-        System.out.println("");
-
-        System.out.println("nodi contati 12(2): " + sl.insert(12, "babbo2"));
-        sl.printBello();
-
-        System.out.println("nodi contati 100: " + sl.insert(100, "a"));
-        sl.printBello();
-        System.out.println("nodi contati 200: " + sl.insert(200, "v"));
-        sl.printBello();
-        System.out.println("nodi contati 300: " + sl.insert(300, "b"));
-        sl.printBello();
-        System.out.println("nodi contati 400: " + sl.insert(400, "c"));
-        sl.printBello();
-        // // Node n = sl.skipSearch(30);
-        // sl.print();
-        // System.out.println("Entry con chiave minima: " + sl.min());
-
-        // System.out.println("Chiave rimossa: " + sl.removeMin());
-        // System.out.println("Chiave rimossa: " + sl.removeMin());
-        // System.out.println("Chiave rimossa: " + sl.removeMin());
-
         sl.print();
+        System.out.println(sl.getAlpha() + ", " + sl.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
     }
 }
