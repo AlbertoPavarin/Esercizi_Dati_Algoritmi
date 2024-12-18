@@ -35,12 +35,9 @@ class SkipListPQ {
         this.rand = new Random();
         this.head = new Node(new MyEntry(Integer.MIN_VALUE, ""));
         Node currNode = this.head;
-        for (int i = 0; i < levels - 1; i++) {
-            Node newNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
-            currNode.setBelow(newNode);
-            newNode.setAbove(currNode);
-            currNode = newNode;
-        }
+        Node newNode = new Node(new MyEntry(Integer.MIN_VALUE, ""));
+        currNode.setBelow(newNode);
+        newNode.setAbove(currNode);
         // this.head.setBelow(new Node(new MyEntry(Integer.MIN_VALUE, "")));
         // Node n1_min = this.head.getBelow();
         // n1_min.setAbove(this.head);
@@ -105,27 +102,33 @@ class SkipListPQ {
     public int insert(int key, String value) {
         int genNmb = this.generateEll(this.alpha, key);
         int olderLevels = this.levels;
+        boolean override = false;
         System.out.println("Gen Numbers: " + genNmb);
         if (genNmb == 0 && this.levels == 1) {
             this.levels += genNmb + 1;
-            generateNewHeads(olderLevels);
+            // generateNewHeads(olderLevels);
+            // override = true;
         }
         
         if (genNmb + 1 >= this.levels) {
             this.levels = genNmb + 2;
             generateNewHeads(olderLevels);
+            override = true;
         }
 
         Node[] nodes = new Node[this.levels];
         nodes[0] = this.head;
         int level = 0;
+        int nodeCnt = 1;
         Node currentNode = this.head;
         Node lastVisited = this.head;
         while (currentNode.getBelow() != null) {
             currentNode = currentNode.getBelow();
             level++;
             lastVisited = currentNode;
+            nodeCnt++;
             while ((currentNode.getNext()) != null) {
+                nodeCnt++;
                 if ( key >= currentNode.getNext().getKey())
                 {
                     lastVisited = currentNode.getNext();
@@ -151,7 +154,10 @@ class SkipListPQ {
             }
         }
 
-        return key;
+        // if (!override)
+        //     return nodeCnt;
+        // else
+        return nodeCnt - (this.levels - olderLevels);
     }
 
     private int generateEll(double alpha_ , int key) {
@@ -362,27 +368,35 @@ public class TestProgram {
         SkipListPQ sl = new SkipListPQ(0.5);
         sl.printBello();
 
-        sl.insert(1, "asd");
+        System.out.println("nodi contati 1: " + sl.insert(1, "asd"));
         System.out.println("");
         sl.printBello();
         System.out.println("");
 
-        sl.insert(12, "babbo");
+        System.out.println("nodi contati 12: " + sl.insert(12, "babbo"));
         Node n = sl.skipSearch(30);
         sl.printBello();
         System.out.println("");
 
-        sl.insert(12, "babbo2");
-        // Node n = sl.skipSearch(30);
+        System.out.println("nodi contati 12(2): " + sl.insert(12, "babbo2"));
         sl.printBello();
-        sl.print();
-        System.out.println("Entry con chiave minima: " + sl.min());
 
-        System.out.println("Chiave rimossa: " + sl.removeMin());
-        System.out.println("Chiave rimossa: " + sl.removeMin());
-        System.out.println("Chiave rimossa: " + sl.removeMin());
-
+        System.out.println("nodi contati 100: " + sl.insert(100, "a"));
         sl.printBello();
+        System.out.println("nodi contati 200: " + sl.insert(200, "v"));
+        sl.printBello();
+        System.out.println("nodi contati 300: " + sl.insert(300, "b"));
+        sl.printBello();
+        System.out.println("nodi contati 400: " + sl.insert(400, "c"));
+        sl.printBello();
+        // // Node n = sl.skipSearch(30);
+        // sl.print();
+        // System.out.println("Entry con chiave minima: " + sl.min());
+
+        // System.out.println("Chiave rimossa: " + sl.removeMin());
+        // System.out.println("Chiave rimossa: " + sl.removeMin());
+        // System.out.println("Chiave rimossa: " + sl.removeMin());
+
         sl.print();
     }
 }
