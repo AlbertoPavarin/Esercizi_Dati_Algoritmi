@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.*;
 
 //Class my entry
@@ -84,8 +85,6 @@ class SkipListPQ {
         System.out.println("Gen Numbers: " + genNmb);
         if (genNmb == 0 && this.levels == 1) {
             this.levels += genNmb + 1;
-            // generateNewHeads(olderLevels);
-            // override = true;
         }
         
         if (genNmb + 1 >= this.levels) {
@@ -115,10 +114,6 @@ class SkipListPQ {
                     break;
             }
             nodes[level] = lastVisited;
-        }
-
-        for (int i = 0; i < nodes.length; i++) {
-            System.out.println(nodes[i]);
         }
 
         // insertion
@@ -308,79 +303,76 @@ public class TestProgram {
     public static void main(String[] args) {
         int tot = 0;
         int insertDone = 0;
-        // if (args.length != 1) {
-        //     System.out.println("Usage: java TestProgram <file_path>");
-        //     return;
-        // }
+        if (args.length != 1) {
+            System.out.println("Usage: java TestProgram <file_path>");
+            return;
+        }
 
-        // try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
-        //     String[] firstLine = br.readLine().split(" ");
-        //     int N = Integer.parseInt(firstLine[0]);
-        //     double alpha = Double.parseDouble(firstLine[1]);
-        //     System.out.println(N + " " + alpha);
+        try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
+            String[] firstLine = br.readLine().split(" ");
+            int N = Integer.parseInt(firstLine[0]);
+            double alpha = Double.parseDouble(firstLine[1]);
+            System.out.println(N + " " + alpha);
 
-        //     SkipListPQ skipList = new SkipListPQ(alpha);
+            SkipListPQ skipList = new SkipListPQ(alpha);
 
-        //     for (int i = 0; i < N; i++) {
-        //         String[] line = br.readLine().split(" ");
-        //         int operation = Integer.parseInt(line[0]);
+            for (int i = 0; i < N; i++) {
+                String[] line = br.readLine().split(" ");
+                int operation = Integer.parseInt(line[0]);
 
-        //         switch (operation) {
-        //             case 0:
-        //                 System.out.println("Min: " + skipList.min());
-        //                 break;
-        //             case 1:
-        //                 System.out.println("RemoveMin: " + skipList.removeMin());
-        //                 break;
-        //             case 2:
-        //                 int nodeCnt = skipList.insert(Integer.parseInt(line[1]), line[2]);
-        //                 tot += nodeCnt;
-        //                 insertDone++;
-        //                 System.out.println("Insert: " + nodeCnt);
-        //                 break;
-        //             case 3:
-        //                 skipList.print();
-        //                 skipList.printBello();
-        //                 return;
+                switch (operation) {
+                    case 0:
+                        System.out.println("Min: " + skipList.min());
+                        break;
+                    case 1:
+                        System.out.println("RemoveMin: " + skipList.removeMin());
+                        break;
+                    case 2:
+                        int nodeCnt = skipList.insert(Integer.parseInt(line[1]), line[2]);
+                        tot += nodeCnt;
+                        insertDone++;
+                        System.out.println("Insert: " + nodeCnt);
+                        break;
+                    case 3:
+                        skipList.print();
+                        break;
+                    default:
+                        System.out.println("Invalid operation code");
+                        return;
+                }
+            }
 
-        //                 // break;
-        //             default:
-        //                 System.out.println("Invalid operation code");
-        //                 return;
-        //         }
-        //     }
+            System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
 
-        //     System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        // SkipListPQ sl = new SkipListPQ(0.5);
+        // sl.printBello();
 
-        // } catch (IOException e) {
-        //     System.out.println("Error reading file: " + e.getMessage());
-        // }
-        SkipListPQ sl = new SkipListPQ(0.5);
-        sl.printBello();
+        // tot += sl.insert(1, "asd");
+        // insertDone++;
+        // tot += sl.insert(12, "babbo");
+        // insertDone++;
+        // tot += sl.insert(12, "babbo2");
+        // sl.printBello();
+        // insertDone++;
+        // tot += sl.insert(10, "a");
+        // sl.printBello();
+        // insertDone++;
+        // tot += sl.insert(200, "v");
+        // insertDone++;
+        // tot += sl.insert(300, "b");
+        // insertDone++;
+        // tot += sl.insert(400, "c");
+        // insertDone++;
+        // sl.printBello();
+        // sl.removeMin();
+        // sl.removeMin();
+        // sl.removeMin();
+        // sl.printBello();
+        // sl.print();
 
-        tot += sl.insert(1, "asd");
-        insertDone++;
-        tot += sl.insert(12, "babbo");
-        insertDone++;
-        tot += sl.insert(12, "babbo2");
-        sl.printBello();
-        insertDone++;
-        tot += sl.insert(10, "a");
-        sl.printBello();
-        insertDone++;
-        tot += sl.insert(200, "v");
-        insertDone++;
-        tot += sl.insert(300, "b");
-        insertDone++;
-        tot += sl.insert(400, "c");
-        insertDone++;
-        sl.printBello();
-        sl.removeMin();
-        sl.removeMin();
-        sl.removeMin();
-        sl.printBello();
-        sl.print();
-
-        System.out.println(sl.getAlpha() + ", " + sl.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
+        // System.out.println(sl.getAlpha() + ", " + sl.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
     }
 }
