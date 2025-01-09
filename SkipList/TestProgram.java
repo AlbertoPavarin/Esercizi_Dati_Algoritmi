@@ -103,9 +103,9 @@ class SkipListPQ {
             lastVisited = currentNode;
             nodeCnt++;
             while ((currentNode.getNext()) != null) {
-                nodeCnt++;
                 if ( key >= currentNode.getNext().getKey())
                 {
+                    nodeCnt++;
                     lastVisited = currentNode.getNext();
                     currentNode = currentNode.getNext();
                 }
@@ -118,7 +118,6 @@ class SkipListPQ {
         // insertion
         Node[] newNodes = new Node[genNmb + 1];
         for (int i = 0; i < genNmb + 1; i++) {
-            this.size++;
             Node newNode = new Node(new MyEntry(key, value));
             newNode.setPrev(nodes[levels - i - 1]);
             newNode.setNext(nodes[levels - i - 1].getNext());
@@ -129,6 +128,7 @@ class SkipListPQ {
                 newNodes[i - 1].setAbove(newNodes[i]);
             }
         }
+        this.size++;
 
         return nodeCnt - (this.levels - olderLevels);
     }
@@ -161,7 +161,6 @@ class SkipListPQ {
         Node prevNode;
         currNode = currNode.getNext();
         while (true) {
-            this.size--;
             prevNode = currNode.getPrev();
             if (currNode.getNext() != null) {
                 prevNode.setNext(currNode.getNext());
@@ -180,6 +179,7 @@ class SkipListPQ {
 
             currNode = currNode.getAbove();
         }   
+        this.size--;
 
         return currNode.getEntry();
     }
@@ -283,8 +283,8 @@ class SkipListPQ {
 
 public class TestProgram {
     public static void main(String[] args) {
-        double tot = 0;
-        double insertDone = 0;
+        long tot = 0;
+        long insertDone = 0;
         if (args.length != 1) {
             System.out.println("Usage: java TestProgram <file_path>");
             return;
@@ -322,38 +322,10 @@ public class TestProgram {
                         return;
                 }
             }
-
-            System.out.println(skipList.getAlpha() + ", " + skipList.size() + ", " + insertDone + ", " + (tot/insertDone) + "");
+            System.out.println(skipList.getAlpha() + " " + skipList.size() + " " + insertDone + " " + ((double)tot/(double)insertDone) + "");
 
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
-        // SkipListPQ sl = new SkipListPQ(0.5);
-        // sl.printBello();
-
-        // tot += sl.insert(1, "asd");
-        // insertDone++;
-        // tot += sl.insert(12, "babbo");
-        // insertDone++;
-        // tot += sl.insert(12, "babbo2");
-        // sl.printBello();
-        // insertDone++;
-        // tot += sl.insert(10, "a");
-        // sl.printBello();
-        // insertDone++;
-        // tot += sl.insert(200, "v");
-        // insertDone++;
-        // tot += sl.insert(300, "b");
-        // insertDone++;
-        // tot += sl.insert(400, "c");
-        // insertDone++;
-        // sl.printBello();
-        // sl.removeMin();
-        // sl.removeMin();
-        // sl.removeMin();
-        // sl.printBello();
-        // sl.print();
-
-        // System.out.println(sl.getAlpha() + ", " + sl.size() + ", " + insertDone + ", " + ((double)tot/(double)insertDone) + "");
     }
 }
